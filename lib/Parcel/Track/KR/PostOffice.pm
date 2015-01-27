@@ -108,6 +108,15 @@ sub track {
 
 __END__
 
+=for Pod::Coverage BUILDARGS
+
+
+=attr id
+
+=method track
+
+=method uri
+
 
 =head1 SEE ALSO
 
