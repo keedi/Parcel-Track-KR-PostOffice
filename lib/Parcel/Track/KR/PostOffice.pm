@@ -44,8 +44,20 @@ sub uri { sprintf( $URI, $_[0]->id ) }
 sub track {
     my $self = shift;
 
+    my %result = (
+        from   => q{},
+        to     => q{},
+        result => q{},
+        htmls  => [],
+        descs  => [],
+    );
+
     my $res = HTTP::Tiny->new( agent => $AGENT )->get( $self->uri );
     return unless $res->{success};
+    unless ( $res->{success} ) {
+        $result{result} = 'failed to get parcel tracking info from the site';
+        return \%result;
+    }
 
     #
     # http://stackoverflow.com/questions/19703341/disabling-html-entities-expanding-in-htmltreebuilder-perl-module
@@ -57,13 +69,6 @@ sub track {
     $tree->parse( $res->{content} );
     $tree->eof;
 
-    my %result = (
-        from   => q{},
-        to     => q{},
-        result => q{},
-        htmls  => [],
-        descs  => [],
-    );
     my $prefix = '/html/body/div/div/div/div';
     $result{from}   = $tree->findvalue("$prefix/table[1]/tbody/tr[1]/td[1]");
     $result{to}     = $tree->findvalue("$prefix/table[1]/tbody/tr[2]/td");
@@ -109,6 +114,31 @@ sub track {
 __END__
 
 =for Pod::Coverage BUILDARGS
+
+=head1 SYNOPSIS
+
+    # Create a tracker
+    my $tracker = Parcel::Track->new( 'KR::PostOffice', '12345-6789-0123' );
+
+    # ID & URI
+    print $tracker->id . "\n";
+    print $tracker->uri . "\n";
+    
+    # Track the information
+    my $result = $tracker->track;
+    
+    # Get the information what you want.
+    if ( $result ) {
+        print "Message sent ok\n";
+        print "$result->{from}\n";
+        print "$result->{to}\n";
+        print "$result->{result}\n";
+        print "$_\n" for @{ $result->{descs} };
+        print "$_\n" for @{ $result->{htmls} };
+    }
+    else {
+        print "Failed to track information\n";
+    }
 
 
 =attr id
