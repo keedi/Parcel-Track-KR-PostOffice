@@ -5,7 +5,7 @@ use utf8;
 
 use Moo;
 
-our $VERSION = '0.002';
+our $VERSION = '0.003';
 
 with 'Parcel::Track::Role::Base';
 
