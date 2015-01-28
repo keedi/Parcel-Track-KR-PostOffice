@@ -44,8 +44,20 @@ sub uri { sprintf( $URI, $_[0]->id ) }
 sub track {
     my $self = shift;
 
+    my %result = (
+        from   => q{},
+        to     => q{},
+        result => q{},
+        htmls  => [],
+        descs  => [],
+    );
+
     my $res = HTTP::Tiny->new( agent => $AGENT )->get( $self->uri );
     return unless $res->{success};
+    unless ( $res->{success} ) {
+        $result{result} = 'failed to get parcel tracking info from the site';
+        return \%result;
+    }
 
     #
     # http://stackoverflow.com/questions/19703341/disabling-html-entities-expanding-in-htmltreebuilder-perl-module
@@ -57,13 +69,6 @@ sub track {
     $tree->parse( $res->{content} );
     $tree->eof;
 
-    my %result = (
-        from   => q{},
-        to     => q{},
-        result => q{},
-        htmls  => [],
-        descs  => [],
-    );
     my $prefix = '/html/body/div/div/div/div';
     $result{from}   = $tree->findvalue("$prefix/table[1]/tbody/tr[1]/td[1]");
     $result{to}     = $tree->findvalue("$prefix/table[1]/tbody/tr[2]/td");

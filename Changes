@@ -1,6 +1,7 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+    - Return valid tracking info if fetching from offcial site is failed
     - Update POD document
 
 
