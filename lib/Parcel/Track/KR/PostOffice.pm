@@ -110,6 +110,31 @@ __END__
 
 =for Pod::Coverage BUILDARGS
 
+=head1 SYNOPSIS
+
+    # Create a tracker
+    my $tracker = Parcel::Track->new( 'KR::PostOffice', '12345-6789-0123' );
+
+    # ID & URI
+    print $tracker->id . "\n";
+    print $tracker->uri . "\n";
+    
+    # Track the information
+    my $result = $tracker->track;
+    
+    # Get the information what you want.
+    if ( $result ) {
+        print "Message sent ok\n";
+        print "$result->{from}\n";
+        print "$result->{to}\n";
+        print "$result->{result}\n";
+        print "$_\n" for @{ $result->{descs} };
+        print "$_\n" for @{ $result->{htmls} };
+    }
+    else {
+        print "Failed to track information\n";
+    }
+
 
 =attr id
 
