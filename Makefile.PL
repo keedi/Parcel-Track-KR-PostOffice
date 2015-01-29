@@ -10,7 +10,7 @@ use ExtUtils::MakeMaker 6.17;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "Parcel::Track driver for the ePOST Korea",
+  "ABSTRACT" => "Parcel::Track driver for the ePOST Korea (\x{c6b0}\x{ccb4}\x{ad6d})",
   "AUTHOR" => "\x{ae40}\x{b3c4}\x{d615} - Keedi Kim <keedi\@cpan.org>",
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => "6.17"
@@ -39,7 +39,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.003",
+  "VERSION" => "0.004",
   "test" => {
     "TESTS" => "t/*.t"
   }
