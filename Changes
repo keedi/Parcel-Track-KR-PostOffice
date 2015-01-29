@@ -1,6 +1,8 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+    - Force verify SSL when connecting to ePOST site
+    - Update document
 
 0.002     2015-01-28 11:31:56+09:00 Asia/Seoul
     - Return valid tracking info if fetching from offcial site is failed

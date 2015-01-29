@@ -1,5 +1,5 @@
 package Parcel::Track::KR::PostOffice;
-# ABSTRACT: Parcel::Track driver for the ePOST Korea
+# ABSTRACT: Parcel::Track driver for the ePOST Korea (우체국)
 
 use utf8;
 
@@ -52,8 +52,12 @@ sub track {
         descs  => [],
     );
 
-    my $res = HTTP::Tiny->new( agent => $AGENT )->get( $self->uri );
-    return unless $res->{success};
+    my $http = HTTP::Tiny->new(
+        agent      => $AGENT,
+        verify_SSL => 1,
+    );
+
+    my $res = $http->get( $self->uri );
     unless ( $res->{success} ) {
         $result{result} = 'failed to get parcel tracking info from the site';
         return \%result;
@@ -117,6 +121,8 @@ __END__
 
 =head1 SYNOPSIS
 
+    use Parcel::Track;
+
     # Create a tracker
     my $tracker = Parcel::Track->new( 'KR::PostOffice', '12345-6789-0123' );
 
@@ -129,7 +135,6 @@ __END__
     
     # Get the information what you want.
     if ( $result ) {
-        print "Message sent ok\n";
         print "$result->{from}\n";
         print "$result->{to}\n";
         print "$result->{result}\n";
@@ -152,4 +157,4 @@ __END__
 
 =for :list
 * L<Parcel::Track>
-* L<ePOST Korea|http://www.epost.go.kr>
+* L<ePOST Korea (우체국)|http://www.epost.go.kr>
