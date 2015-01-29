@@ -1,6 +1,7 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+    - Handle exception if tracking number is invalid
 
 0.003     2015-01-29 17:37:02+09:00 Asia/Seoul
     - Force verify SSL when connecting to ePOST site

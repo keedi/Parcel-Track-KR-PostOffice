@@ -74,6 +74,15 @@ sub track {
     $tree->eof;
 
     my $prefix = '/html/body/div/div/div/div';
+
+    my $html1 = ( $tree->findnodes("$prefix/table[1]") )[0];
+    my $html2 = ( $tree->findnodes("$prefix/table[2]") )[0];
+    my $html3 = ( $tree->findnodes("$prefix/form/table") )[0];
+    unless ( $html1 && $html2 && $html3 ) {
+        $result{result} = 'cannot find such parcel info';
+        return \%result;
+    }
+
     $result{from}   = $tree->findvalue("$prefix/table[1]/tbody/tr[1]/td[1]");
     $result{to}     = $tree->findvalue("$prefix/table[1]/tbody/tr[2]/td");
     $result{result} = sprintf( '%s %s',
@@ -81,11 +90,7 @@ sub track {
         $tree->findvalue("$prefix/table[2]/tbody/tr/td[5]"),
     );
 
-    $result{htmls} = [
-        ( $tree->findnodes("$prefix/table[1]") )[0]->as_HTML,
-        ( $tree->findnodes("$prefix/table[2]") )[0]->as_HTML,
-        ( $tree->findnodes("$prefix/form/table") )[0]->as_HTML,
-    ];
+    $result{htmls} = [ $html1->as_HTML, $html2->as_HTML, $html3->as_HTML ];
 
     my @elements = $tree->findnodes("$prefix/form/table/tbody/tr");
     for my $e (@elements) {
