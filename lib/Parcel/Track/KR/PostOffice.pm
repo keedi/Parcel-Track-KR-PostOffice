@@ -1,5 +1,5 @@
 package Parcel::Track::KR::PostOffice;
-# ABSTRACT: Parcel::Track driver for the ePOST Korea
+# ABSTRACT: Parcel::Track driver for the ePOST Korea (우체국)
 
 use utf8;
 
@@ -117,6 +117,8 @@ __END__
 
 =head1 SYNOPSIS
 
+    use Parcel::Track;
+
     # Create a tracker
     my $tracker = Parcel::Track->new( 'KR::PostOffice', '12345-6789-0123' );
 
@@ -129,7 +131,6 @@ __END__
     
     # Get the information what you want.
     if ( $result ) {
-        print "Message sent ok\n";
         print "$result->{from}\n";
         print "$result->{to}\n";
         print "$result->{result}\n";
@@ -152,4 +153,4 @@ __END__
 
 =for :list
 * L<Parcel::Track>
-* L<ePOST Korea|http://www.epost.go.kr>
+* L<ePOST Korea (우체국)|http://www.epost.go.kr>
