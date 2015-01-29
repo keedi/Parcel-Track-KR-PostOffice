@@ -1,6 +1,8 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+
+0.004     2015-01-29 18:50:26+09:00 Asia/Seoul
     - Handle exception if tracking number is invalid
 
 0.003     2015-01-29 17:37:02+09:00 Asia/Seoul
