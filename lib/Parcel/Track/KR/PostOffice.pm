@@ -52,8 +52,12 @@ sub track {
         descs  => [],
     );
 
-    my $res = HTTP::Tiny->new( agent => $AGENT )->get( $self->uri );
-    return unless $res->{success};
+    my $http = HTTP::Tiny->new(
+        agent      => $AGENT,
+        verify_SSL => 1,
+    );
+
+    my $res = $http->get( $self->uri );
     unless ( $res->{success} ) {
         $result{result} = 'failed to get parcel tracking info from the site';
         return \%result;
